@@ -17,8 +17,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__))))
 from soccerstats.application import create_app
 
 
-manager = Manager(create_app())
-manager.add_command("runserver", Server(host="0.0.0.0", port=5000))
+manager = Manager(create_app({'DEBUG': True}))
+manager.add_command("runserver", Server(host="0.0.0.0", port=5000,
+                                        threaded=True, use_debugger=True))
 
 
 @manager.command

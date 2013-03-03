@@ -1,0 +1,2 @@
+CORS_ENABLED = True
+CORS_ORIGIN = "*"

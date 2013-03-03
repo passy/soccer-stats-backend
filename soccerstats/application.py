@@ -33,8 +33,8 @@ def create_app(config=None):
     from . import settings
 
     app = JSONFlask('soccerstats')
-
     app.config.from_object(settings)
+
     if config is not None:
         app.config.update(config)
 
