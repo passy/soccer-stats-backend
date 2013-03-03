@@ -40,12 +40,14 @@ class ScoreTestCase(ApiTestCase):
 
         response = self.client.post('/v1/score', data=results)
         self.assertEquals(response.status_code, 200)
-        data = json.loads(response.data)['scores']
+        data = json.loads(response.data)
 
-        self.assertAlmostEqual(data['Team A'], 1.625)
-        self.assertAlmostEqual(data['Team B'], 0.75)
-        self.assertAlmostEqual(data['Team C'], -0.875)
-        self.assertAlmostEqual(data['Team D'], -1.5)
+        scores = data['scores']
+
+        self.assertAlmostEqual(scores['Team A'], 1.625)
+        self.assertAlmostEqual(scores['Team B'], 0.75)
+        self.assertAlmostEqual(scores['Team C'], -0.875)
+        self.assertAlmostEqual(scores['Team D'], -1.5)
 
 
 class CORSTestCase(ApiTestCase):

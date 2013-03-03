@@ -15,11 +15,12 @@ api = Blueprint('api', __name__, url_prefix='/v1')
 
 
 class ScoresResponse(object):
-    def __init__(self, scores):
+    def __init__(self, scores, errors):
         self.scores = scores
+        self.errors = errors
 
     def to_json(self):
-        return {'scores': self.scores}
+        return {'scores': self.scores, 'errors': list(self.errors)}
 
 
 @api.route('/score', methods=['POST'])
@@ -35,8 +36,9 @@ def score():
         abort(400)
 
     try:
-        scores = calculate_scores(results)
+        results = calculate_scores(results)
     except Exception as err:
-        return JSONError('CALCULATION_ERROR', code=-1, message=err).to_error()
+        return JSONError('CALCULATION_ERROR', code=-1, message=str(err))\
+            .to_error()
 
-    return ScoresResponse(scores)
+    return ScoresResponse(*results)

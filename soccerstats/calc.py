@@ -40,10 +40,17 @@ def map_scores_to_teams(scores, teams):
     return {inv_teams[i]: value for (i, value) in enumerate(scores)}
 
 
+def calculate_errors(score_vector, result_vector, selection_matrix):
+    return result_vector.T - selection_matrix.dot(score_vector)
+
+
 def calculate_scores(results):
     teams = extract_teams(results)
     selection_matrix = build_selection_matrix(results, teams)
     result_vector = build_result_vector(results)
 
     score_vector = pinv(selection_matrix).dot(result_vector.T)
-    return map_scores_to_teams(score_vector, teams)
+    error_vector = calculate_errors(score_vector, result_vector,
+                                    selection_matrix)
+
+    return map_scores_to_teams(score_vector, teams), error_vector
