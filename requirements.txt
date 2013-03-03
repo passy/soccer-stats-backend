@@ -6,3 +6,4 @@ distribute==0.6.28
 numpy==1.7.0
 scipy==0.11.0
 wsgiref==0.1.2
+gunicorn==0.17.2
