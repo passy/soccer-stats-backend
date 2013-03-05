@@ -19,8 +19,13 @@ class ScoresResponse(object):
         self.scores = scores
         self.errors = errors
 
+    @property
+    def sorted_scores(self):
+        # Sort by descending by value
+        return dict(sorted(self.scores.items(), key=lambda x: -x[1]))
+
     def to_json(self):
-        return {'scores': self.scores, 'errors': list(self.errors)}
+        return {'scores': self.sorted_scores, 'errors': list(self.errors)}
 
 
 @api.route('/score', methods=['POST'])
